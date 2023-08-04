@@ -65,16 +65,25 @@ class OciApi
     "displayName": "$displayName",
     "availabilityDomain": "$availabilityDomain",
     "sourceDetails": {$config->getSourceDetails()},
+    "isPvEncryptionInTransitEnabled": true,
     "createVnicDetails": {
-        "assignPublicIp": false,
+        "assignPublicIp": true,
         "subnetId": "{$config->subnetId}",
         "assignPrivateDnsRecord": true
     },
     "agentConfig": {
         "pluginsConfig": [
             {
+                "name": "Vulnerability Scanning",
+                "desiredState": "ENABLED"
+            },
+            {
                 "name": "Compute Instance Monitoring",
                 "desiredState": "ENABLED"
+            },
+            {
+                "name": "Bastion",
+                "desiredState": "DISABLED"
             }
         ],
         "isMonitoringDisabled": false,
@@ -86,6 +95,7 @@ class OciApi
         "areLegacyImdsEndpointsDisabled": false
     },
     "availabilityConfig": {
+        "isLiveMigrationPreferred": true,
         "recoveryAction": "RESTORE_INSTANCE"
     },
     "shapeConfig": {
@@ -94,6 +104,7 @@ class OciApi
     }
 }
 EOD;
+echo $body;
 
         $baseUrl = "{$this->getBaseApiUrl($config)}/instances/";
 

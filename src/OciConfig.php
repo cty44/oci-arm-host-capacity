@@ -25,7 +25,7 @@ class OciConfig
 
     public string $sourceDetails;
     public string $bootVolumeId;
-    public string $bootVolumeSizeInGBs;
+    public int $bootVolumeSizeInGBs;
 
     /**
      * @param string $region
@@ -57,7 +57,7 @@ class OciConfig
         $this->tenancyId = $tenancyId;
         $this->keyFingerPrint = $keyFingerPrint;
         $this->privateKeyFilename = $privateKeyFilename;
-        $this->availabilityDomains = $availabilityDomains;
+        $this->availabilityDomains = explode(",", $availabilityDomains);
         $this->subnetId = $subnetId;
         $this->imageId = $imageId;
         $this->ocpus = $ocups;
@@ -108,13 +108,15 @@ class OciConfig
             ];
         }
 
+	$sourceDetails['bootVolumeVpusPerGB'] = 10;
+
         return json_encode($sourceDetails);
     }
 
     /**
      * @param string $bootVolumeSizeInGBs
      */
-    public function setBootVolumeSizeInGBs(string $bootVolumeSizeInGBs): void
+    public function setBootVolumeSizeInGBs(int $bootVolumeSizeInGBs): void
     {
         $this->bootVolumeSizeInGBs = $bootVolumeSizeInGBs;
     }
