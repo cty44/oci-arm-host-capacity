@@ -108,6 +108,8 @@ foreach ($availabilityDomains as $availabilityDomainEntity) {
             // trying next availability domain
             sleep(16);
             continue;
+        } else {
+            shell_exec('echo "'.$message.'" | mail -s "PP Oracle ARM VM exception" root');
         }
 
         // current config is broken
